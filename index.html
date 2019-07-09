@@ -1,0 +1,120 @@
+# javascript
+
+<!DOCTYPE html>
+<html>
+<body>
+
+
+<style>
+table{
+  border: 1px solid black; }
+</style>
+
+
+
+
+<h2>Add User</h2>
+
+<form method="post">
+Name   :<input type="text"  id="name">
+<br>
+Address  :<input type="text"  id="add">
+<br>
+Age      :<input type="number"  id="age">
+<br>
+<button type="button" onclick=addUser()> Submit </button>
+
+</form>
+
+<br>
+<br>
+
+<table id="myTable">
+  <tr>
+    <th>Name</th>
+    <th>Address</th>
+    <th>Age</th>
+  </tr>
+ 
+</table>
+
+
+<script>
+var temp=null;
+var selectedRow=null;
+function onEdit(td) {
+    selectedRow = td.parentElement.parentElement;
+    document.getElementById("name").value = selectedRow.cells[0].innerHTML;
+    document.getElementById("add").value = selectedRow.cells[1].innerHTML;
+    document.getElementById("age").value = selectedRow.cells[2].innerHTML;
+    temp=selectedRow;
+    
+}
+
+
+function onDelete(td) {
+    if (confirm('Are you sure to delete this record ?')) {
+        row = td.parentElement.parentElement;
+        document.getElementById("myTable").deleteRow(row.rowIndex);
+        resetForm();
+    }
+}
+
+function resetForm() {
+    document.getElementById("name").value = "";
+    document.getElementById("add").value = "";
+    document.getElementById("age").value = "";
+    selectedRow = null;
+}
+
+function addUser()
+{
+   
+   
+  if(temp==null)
+  {
+  name=document.getElementById("name").value;
+  address=document.getElementById("add").value;
+  age=document.getElementById("age").value;
+  var c=document.getElementById("myTable").rows.length;
+  
+ 
+   
+  var table = document.getElementById("myTable");
+  var row = table.insertRow(c);
+  var cell1 = row.insertCell(0);
+  var cell2 = row.insertCell(1);
+  var cell3 = row.insertCell(2);
+  var cell4 = row.insertCell(3);
+  var cell5 = row.insertCell(4);
+  
+  cell1.innerHTML = String(name);
+  cell2.innerHTML = String(address);
+  cell3.innerHTML =String(age);
+  cell4.innerHTML= "<button type='button' onclick=onEdit(this)> Edit </button>";
+  cell5.innerHTML= "<button type='button'onclick=onDelete(this)>  Delete </button>";
+  
+    resetForm();
+  }
+  
+  else
+  {
+    temp.cells[0].innerHTML = document.getElementById("name").value;
+    temp.cells[1].innerHTML = document.getElementById("add").value;
+    temp.cells[2].innerHTML = document.getElementById("age").value;
+    
+    temp=null;
+    selectedRow=null;
+    resetForm();
+   
+  }
+  
+    
+}
+
+
+</script>
+
+
+</body>
+</html>
